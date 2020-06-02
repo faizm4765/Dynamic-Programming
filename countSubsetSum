@@ -1,0 +1,58 @@
+Given an array arr[] of length N and an integer X, the task is to find the number of subsets with sum equal to X.
+
+Examples:
+
+Input: arr[] = {1, 2, 3, 3}, X = 6
+Output: 3
+All the possible subsets are {1, 2, 3},
+{1, 2, 3} and {3, 3}
+----------------------------------------------------------------------------------------------------------
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int fun(int arr[],int n,int sum,int** dp){
+
+    if(n == 0 and sum != 0)
+        return 0;
+
+    if(sum == 0)
+        return 1;
+
+    if(dp[n][sum] != -1)
+       return dp[n][sum];
+
+    if(arr[n-1] > sum)
+        return (dp[n][sum] = fun(arr,n-1,sum,dp));
+    
+    return (dp[n][sum] = fun(arr,n-1,sum,dp) + fun(arr,n-1,sum-arr[n-1],dp));
+
+}
+
+
+int main(){
+    int n,sum;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    cin>>sum;
+    int **dp,i,j;
+    dp = new int*[n+1];
+    for(i=0;i<=n;i++){
+        dp[i] = new int[sum+1];
+    }
+    for(i=0;i<n+1;i++){
+        for(j=0;j<sum+1;j++)
+            dp[i][j] = -1;
+    }
+    //int p[1002][1002];
+    //memset(dp,-1,sizeof(dp));
+    std::cout<<fun(a,n,sum,dp);
+
+    cout<<"\n";
+
+    return 0;
+}
