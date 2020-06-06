@@ -1,0 +1,56 @@
+/*  Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n.
+
+    Determine the maximum value obtainable by cutting up the rod and selling the pieces. 
+*/
+
+---------------------------------------------------------------------------------------------------------------------------
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int rodCut(int price[],int n){
+    int len[n+1],i,j;
+    for(i=0;i<=n;i++)
+        len[i] = i;
+
+    int** dp;
+    dp = new int*[n+1];
+    for(i=0;i<=n;i++){
+        dp[i] = new int[n+1];
+    }
+
+    for(i=0;i<=n;i++){
+        for(j=0;j<=n;j++){
+            if(i == 0)
+                dp[i][j] = 0;
+            else if(j == 0)
+                dp[i][j] = 0;
+            else if(len[i] <= j){
+                dp[i][j] = max(price[i-1] + dp[i][j-len[i]] ,dp[i-1][j]);
+            }else{
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+    return dp[n][n];
+}
+
+
+
+int main(){
+
+    int n;
+    cin>>n;
+    int price[n],i;
+    
+    
+    for(i=0;i<n;i++)
+        cin>>price[i];
+    
+    cout<<rodCut(price,n);
+    cout<<"\n";
+
+
+    return 0;
+}
