@@ -3,7 +3,7 @@ using namespace std;
 
 #define pb push_back
 
-string scSubsequence(string a,string b,int m,int n){
+string scSupersequence(string a,string b,int m,int n){
 
     int**dp,i,j;
     dp = new int*[m+1];
@@ -23,7 +23,7 @@ string scSubsequence(string a,string b,int m,int n){
         }
     }
 
-    vector<char> v;
+   // vector<char> v;
     string s;
     i = m,j = n;
     while(i>0 and j>0){
@@ -61,7 +61,7 @@ int main(){
 
     int m = a.length(),n = b.length();
 
-    cout<<scSubsequence(a,b,m,n)<<"\n";
+    cout<<scSupersequence(a,b,m,n)<<"\n";
 
     return 0;
 }
