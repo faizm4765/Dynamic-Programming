@@ -1,0 +1,64 @@
+Given an array A[ ] denoting the time taken to complete N tasks, 
+determine the minimum amount of time required to finish the tasks considering that you can skip any task, but skipping two consecutive tasks is forbidden.
+
+Examples 
+
+Input
+4
+4
+10 5 7 10
+6
+5 6 7 8 9 10
+2
+10 20
+5
+22 10 15 3 5
+
+Output
+12
+21
+10
+13
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int solve(int a[],int n){
+    
+    int incl[n + 1],excl[n + 1];
+    incl[0] = 0;
+    excl[0] = 0;
+    int res = INT_MAX;
+    
+    for(int i = 0;i < n;i++){
+        incl[i + 1] = a[i] + min(incl[i],excl[i]);
+        excl[i + 1] = incl[i];
+        res = min(incl[i + 1],excl[i + 1]);
+    }
+    
+    return res;
+}
+
+
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--){
+	    
+	    int n;
+	    cin>>n;
+	    
+	    int a[n],i;
+	    for(i = 0;i <n ;i++)
+	        cin>>a[i];
+	    
+	    cout<<solve(a,n);
+	    cout<<"\n";
+	}
+	return 0;
+}
+
