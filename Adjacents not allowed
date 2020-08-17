@@ -1,0 +1,57 @@
+// INSPIRED BY ROBBER PROBLEM
+
+
+You have a rectangular grid of dimension 2 x N. 
+You need to find out the maximum sum such that no two chosen numbers are adjacent, vertically, diagonally or horizontally .
+
+
+Example:
+
+Input:
+
+1
+3
+1 4 5
+2 0 0
+
+Output:
+
+7
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+#include <iostream>
+using namespace std;
+
+int main() {
+	//code
+	
+	int t;
+	cin>>t;
+	
+	while(t--){
+	    
+	    int n;
+	    cin>>n;
+	    
+	    int a[2][n];
+	    
+	    for(int i = 0;i < 2;i++){
+	        for(int j = 0;j < n;j++){
+	            cin>>a[i][j];
+	        }
+	    }
+	    
+	    int dp[n + 1];
+	    dp[n] = 0;
+	    dp[n - 1] = max(a[0][n -1],a[1][n - 1]);
+	    
+	    for(int i = n - 2;i >= 0;i--){
+	        dp[i] = max(max(a[0][i],a[1][i]) + dp[i + 2], dp[i + 1]);
+	    }
+	    cout<<dp[0];
+	    cout<<"\n";
+	}
+	
+	return 0;
+}
