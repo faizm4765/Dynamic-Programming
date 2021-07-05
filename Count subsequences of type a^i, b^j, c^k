@@ -1,0 +1,55 @@
+Given a string S, the task is to count number of subsequences of the form aibjck, where i >= 1, j >=1 and k >= 1.
+
+Note: 
+1. Two subsequences are considered different if the set of array indexes picked for the 2 subsequences are different.
+2.  For large test cases, output value will be too large, return the answer MODULO 10^9+7
+
+ 
+
+Example 1:
+
+Input:
+S = "abbc"
+Output: 3
+Explanation: Subsequences are abc, abc and abbc.
+
+---------------------------------------------------------------------------------------------------------
+class Solution{
+  public:
+    // s : given string
+    // return the expected answer
+    int fun(string &s) {
+        //code here
+        int n = s.size(),i,j;
+        int m = 1000000007;
+        int dp[3][n];
+        memset(dp,0,sizeof(dp));
+        for(j = 0;j < n;j++){
+            for(i = 0;i < 3;i++){
+                if(s[j] == 'a'){
+                    if(i == 0 and j == 0)
+                        dp[i][j] = 1;
+                    else if(i == 0 and j > 0)
+                        dp[i][j] = ((2 * (dp[i][j - 1]%m))%m + 1) % m ;
+                    else
+                        dp[i][j] = dp[i][j - 1];
+                }
+                else if(s[j] == 'b'){
+                    if(i == 1 and j > 0)
+                        dp[i][j] = ((2 * dp[i][j - 1] % m) % m + dp[i - 1][j - 1] % m) % m;
+                    else
+                        dp[i][j] = dp[i][j - 1];
+                    
+                }
+                else{
+                    if(i == 2 and j > 1)
+                        dp[i][j] = ((2 * dp[i][j - 1] % m) % m + dp[i - 1][j - 1] % m) % m;
+                    else
+                        dp[i][j] = dp[i][j - 1];
+                    
+                }
+            }
+        }
+        return (int)dp[2][n - 1] % m;
+    }
+};
